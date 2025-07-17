@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>পরীক্ষা ফর্ম</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #f5f5f5;
+  color: #333;
+  line-height: 1.6;
+  padding: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.form-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+}
+
+.form-container h1 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: #2980b9;
+}
+
+.quiz-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+}
+
+.quiz-header {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.quiz-header h1 {
+  color: #2c3e50;
+  margin-bottom: 15px;
+}
+
+.progress-container {
+  width: 100%;
+  background-color: #ecf0f1;
+  border-radius: 5px;
+  margin: 10px 0;
+  height: 20px;
+  position: relative;
+}
+
+#progress-bar {
+  height: 100%;
+  border-radius: 5px;
+  background-color: #3498db;
+  width: 2%;
+  transition: width 0.3s ease;
+}
+
+#progress-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.score-container {
+  font-size: 18px;
+  font-weight: bold;
+  color: transparent;
+  margin: 10px 0;
+}
+
+.skip-counter {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #7f8c8d;
+}
+
+.question-container {
+  margin-bottom: 30px;
+}
+
+.question-container h2 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.options-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 15px;
+}
+
+.option {
+  background-color: #ecf0f1;
+  border: 2px solid #bdc3c7;
+  border-radius: 5px;
+  padding: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.option:hover {
+  background-color: #d6eaf8;
+  border-color: #3498db;
+}
+
+.option.selected {
+  background-color: #3498db;
+  color: white;
+  border-color: #2980b9;
+}
+
+.option.correct {
+  background-color: #2ecc71;
+  border-color: #27ae60;
+  color: white;
+}
+
+.option.wrong {
+  background-color: red;
+  border-color: #c0392b;
+  color: white;
+}
+
+.tip {
+  display: none;
+  margin-top: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+.option.show-tip .tip {
+  display: block;
+}
+
+.navigation-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.navigation-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.navigation-buttons button:hover {
+  background-color: #2980b9;
+}
+
+.navigation-buttons button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
+}
+
+.skip-btn {
+  background-color: #e67e22;
+}
+
+.skip-btn:hover {
+  background-color: #d35400;
+}
+
+.skip-btn:disabled {
+  background-color: #bdc3c7;
+}
+
+#submit-btn {
+  background-color: #27ae60;
+}
+
+#submit-btn:hover {
+  background-color: #219653;
+}
+
+.result-container {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+}
+
+.result-container h2 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.user-info {
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+
+.result-details {
+  margin-bottom: 30px;
+}
+
+.result-details p {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.result-status {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.pass {
+  background-color: #d4edda;
+  color: green;
+}
+
+.fail {
+  background-color: #f8d7da;
+  color: red;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.action-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+  background-color: #2980b9;
+}
+
+#show-mistakes-btn {
+  background-color: #e67e22;
+}
+
+#show-mistakes-btn:hover {
+  background-color: #d35400;
+}
+
+.wrong-answers-list {
+  margin-top: 20px;
+  text-align: left;
+}
+
+.wrong-answer-item {
+  margin-bottom: 15px;
+  padding: 15px;
+  background-color: #f8d7da;
+  border-radius: 5px;
+  border-left: 5px solid #e74c3c;
+}
+
+.wrong-answer-item p {
+  margin: 5px 0;
+}
+
+.wrong-answer-item .question-text {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.wrong-answer-item .your-answer {
+  color: #e74c3c;
+}
+
+.wrong-answer-item .correct-answer {
+  color: #27ae60;
+}
+
+.wrong-answer-item .explanation {
+  font-style: italic;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <!-- Registration Form -->
+        <div class="form-container" id="registration-form">
+            <h1>Fill the From</h1>
+            <form id="exam-form">
+                <div class="form-group">
+                    <label for="fullname">Full Name:</label>
+                    <input type="text" id="fullname" name="fullname"
+                    placeholder="Examiner Full Name"
+                    required>
+                </div>
+                <button type="submit" class="btn">Let's Start </button>
+            </form>
+        </div>
+
+        <!-- Quiz Container -->
+        <div class="quiz-container" id="quiz-container" style="display: none;">
+            <div class="quiz-header">
+                <h1 id="quiz-title">HTML/CSS Exam</h1>
+                <div class="progress-container">
+                    <div id="progress-bar"></div>
+                    <span id="progress-text">question 1/51</span>
+                </div>
+                <div class="score-container">
+                    <span id="score">Marks: 0</span>
+                </div>
+                <div class="skip-counter">
+                    <span>HTML Skip: <span id="html-skips">0/3</span></span>
+                    <span>CSS Skip: <span id="css-skips">0/3</span></span>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <h2 id="question">Loading Your Questions...</h2>
+                <div class="options-container" id="options">
+                    <!-- Options will be inserted here by JavaScript -->
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button id="skip-btn" class="skip-btn">Skip</button>
+                <button id="prev-btn" disabled>Previous</button>
+                <button id="next-btn">Next</button>
+                <button id="submit-btn" style="display: none;">Show Result</button>
+            </div>
+        </div>
+        
+        <!-- Result Container -->
+        <div class="result-container" id="result-container" style="display: none;">
+            <h2>Your Exam Result</h2>
+            <div class="user-info">
+                <p>Examiner Name: <span id="user-name"></span></p>
+            </div>
+            <div class="result-details">
+                <p>Total Question: <span id="total-questions">51</span></p>
+                <p>Correct Answer: <span id="correct-answers">০</span></p>
+                <p>Wrong Answer: <span id="wrong-answers">0</span></p>
+                <p>Marks Percentage : <span id="final-score">0</span>%</p>
+                <p class="result-status" id="result-status"></p>
+            </div>
+            
+            <div class="action-buttons">
+                <button id="show-mistakes-btn">Show Mistakes</button>
+                <button id="restart-btn">restart</button>
+            </div>
+            
+            <div class="wrong-answers-list" id="wrong-answers-list" style="display: none;">
+                <h3>All questions you Answer Wrong:</h3>
+                <!-- Wrong answers will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+// Question database - 51 questions (25 HTML + 26 CSS)
+const questions = [
+    // HTML প্রশ্ন (২৫টি)
+    {
+        category: "HTML",
+        question: "HTML এর পূর্ণরূপ কী?",
+        options: [
+            "Hyper Text Markup Language",
+            "Hyperlinks and Text Markup Language",
+            "Home Tool Markup Language",
+            "Hyper Tool Markup Language"
+        ],
+        correctAnswer: 0,
+        tip: "HTML এর পূর্ণরূপ Hyper Text Markup Language."
+    },
+    {
+        category: "HTML",
+        question: "HTML এর সবচেয়ে বড় ও ছোট হেডিং ট্যাগ হলো-",
+        options: [
+            "&lt;h6&gt; & &lt;h2&gt;",
+            "&lt;h6&gt; & &lt;h1&gt;",
+            "&lt;h1&gt; & &lt;h6&gt;",
+            "&lt;h3&gt; & &lt;h2&gt;"
+        ],
+        correctAnswer: 2,
+        tip: "h1 হলো সবচেয়ে বড় হেডিং ট্যাগ আর h6 হলো সবচেয়ে ছোট হেডিং ট্যাগ।"
+    },
+    {
+        category: "HTML",
+        question: "নিচের কোন ট্যাগ হাইপারলিংক তৈরি করে?",
+        options: [
+            "&lt;link&gt;",
+            "&lt;a&gt;",
+            "&lt;href&gt;",
+            "&lt;hyperlink&gt;"
+        ],
+        correctAnswer: 1,
+        tip: "হাইপারলিংক তৈরি করতে &lt;a&gt; ট্যাগ ব্যবহার করা হয়।"
+    },
+    {
+        category: "HTML",
+        question: "<marquee> ট্যাগের একটি অ্যাট্রিবিউট হলো-",
+        options: [
+            "position",
+            "direction",
+            "height",
+            "left"
+        ],
+        correctAnswer: 1,
+        tip: "position, height ও left এগুলো CSS এ ব্যবহার করা হয়। direction অ্যাট্রিবিউট marquee ট্যাগে ব্যবহার করা হয় যাতে নির্দেশ করা যায় কন্টেন্ট কোন দিক থেকে শুরু হবে।"
+    },
+    {
+        category: "HTML",
+        question: "HTML এ কমেন্ট লেখার সিনট্যাক্স হলো-",
+        options: [
+            "&lt;-!comments-&gt;",
+            "&lt;!--comments--&gt;",
+            "&lt;!-comments-&gt;",
+            "&lt;comments&gt;"
+        ],
+        correctAnswer: 1,
+        tip: "HTML এ কমেন্ট লেখার সিনট্যাক্স হলো &lt;!--your comments --&gt;"
+    },
+    {
+        category: "HTML",
+        question: "HTML এ  শ্রেনী বরাবর কাজের জন্য কোন এলিমেন্ট ব্যবহার করা হয়?",
+        options: [
+            "&lt;nav&gt;",
+            "&lt;div&gt;",
+            "&lt;menu&gt;",
+            "&lt;section&gt;"
+        ],
+        correctAnswer: 1,
+        tip: "&lt;div&gt; এলিমেন্টটি প্রধান শ্রেণী হিসাবে কাজের জন্য ব্যবহৃত হয়।"
+    },
+    {
+        category: "HTML",
+        question: "টেবিলের একটি সারি নির্দেশ করতে কোন ট্যাগ ব্যবহার করা হয়?",
+        options: [
+            "&lt;tr&gt;",
+            "&lt;td&gt;",
+            "&lt;th&gt;",
+            "&lt;table&gt;"
+        ],
+        correctAnswer: 0,
+        tip: "&lt;tr&gt; ট্যাগ টেবিলের একটি সারি নির্দেশ করে, &lt;td&gt; ট্যাগ টেবিলের একটি সেল নির্দেশ করে, এবং &lt;th&gt; ট্যাগ হেডার সেল নির্দেশ করে।"
+    },
+    {
+        category: "HTML",
+        question: "HTML5 এ কোন চিহ্নটি এন্ড ট্যাগ নির্দেশ করে?",
+        options: [
+            "*",
+            "/",
+            "\\",
+            "#"
+        ],
+        correctAnswer: 1,
+        tip: "এন্ড ট্যাগ শুরু ট্যাগ থেকে ফরওয়ার্ড স্ল্যাশ (/) দ্বারা আলাদা করা হয়।"
+    },
+    {
+        category: "HTML",
+        question: "Html মূলত যে live server এ চলে তার নাম হলো-",
+        options: [
+            "browser",
+            "localhost",
+            "localstorage",
+            "localxpos;"
+        ],
+        correctAnswer: 1,
+        tip: "browser কোনো live server নয় বরং এটার সাহায্যে html রান করা হয় আর localstorage হলো Web Storage API-এর একটা অংশ, যা ব্রাউজারে ডেটা স্থায়ীভাবে (persistent) সেভ করে রাখে আর localxpos কোনো Web API নয় সাধারণত localXPos নামে ভ্যারিয়েবল বা প্রপার্টি JavaScript-এ Custom Variable বা Game/Canvas Object Property হিসেবে ব্যবহার হয়। localhost হলো একমাত্র লাইভ সার্ভার যেটাতে html play হয়"
+    },
+    {
+        category: "HTML",
+        question: "html এ <meta> tag এর কাজ হলো-",
+        options: [
+            "live server এর পরিচয় দিতে",
+            "systme এর পরিচয় দিতে",
+            "a ও b উভয়ই",
+            "কোনোটিই নয়"
+        ],
+        correctAnswer: 1,
+        tip: "meta tag মূলত systme এর পরিচয় দেবার জন্য ব্যবহার করা হয় যেমন systme এর width,height,utf type ইত্যাদি"
+    },
+    {
+        category: "HTML",
+        question: "HTML5 এ heather file code যেভাবে লেখা hoi-",
+        options: [
+            "নীচের সভাবেই লেখা যায়",
+            "&lt;!DOCTYPE html&gt;",
+            "&lt;!doctype html&gt;",
+            "&lt;!DoCTypE html&gt;"
+        ],
+        correctAnswer: 0,
+        tip: "capital হোক বা small letter ওতে কোনো problem হয় না, উপরিক্ত সভাবেই heather file code লেখা যায়"
+    },
+    {
+        category: "HTML",
+        question: "কোন অ্যাট্রিবিউট নির্দেশ করে যে একটি ইনপুট ফিল্ড অবশ্যই পূরণ করতে হবে?",
+        options: [
+            "placeholder",
+            "required",
+            "validate",
+            "necessary"
+        ],
+        correctAnswer: 1,
+        tip: "required অ্যাট্রিবিউট নির্দেশ করে যে ফর্ম জমা দেওয়ার আগে ইনপুট ফিল্ডটি পূরণ করতে হবে।"
+    },
+    {
+        category: "HTML",
+        question: "html এ internal css ব্যবহার করতে গেলে কোন tag ব্যবহার করতে হয়",
+        options: [
+            "&lt;script&gt;",
+            "&lt;link&gt;",
+            "&lt;a&gt;",
+            "&lt;style&gt;"
+        ],
+        correctAnswer: 3,
+        tip: "&lt;style&gt; tag মূলত internal css ব্যবহার করতে গেলে &lt;head&gt; element এর মধ্যে ব্যবহার করতে হয়"
+    },
+    {
+        category: "HTML",
+        question: "ভিডিও ফাইল প্লে করতে কোন HTML5 এলিমেন্ট ব্যবহার করা হয়?",
+        options: [
+            "&lt;media&gt;",
+            "&lt;video&gt;",
+            "&lt;movie&gt;",
+            "&lt;play&gt;"
+        ],
+        correctAnswer: 1,
+        tip: "&lt;video&gt; এলিমেন্ট ডকুমেন্টে ভিডিও কন্টেন্ট এম্বেড করতে ব্যবহৃত হয়।"
+    },
+    {
+        category: "HTML",
+        question: "HTML5 এ empty element হলো-",
+        options: [
+            "&lt;i&gt;",
+            "&lt;br&gt;",
+            "&lt;u&gt;",
+            "&lt;empty&gt;"
+        ],
+        correctAnswer: 1,
+        tip: "&lt;br&gt; element হলো HTML5 এর empty tag এর উদাহরণ কারণ এই tag এর শেষ হয় না example: &lt;i&gt;&lt;/i&gt; এর শেষ ট্যাগ আছে তবে &lt;br&gt; এর শেষ ট্যাগ হয় না।"
+    },
+    {
+        category: "HTML",
+        question: "কোন অ্যাট্রিবিউট লিঙ্কের গন্তব্য URL নির্দেশ করে?",
+        options: [
+            "link",
+            "src",
+            "url",
+            "href"
+        ],
+        correctAnswer: 3,
+        tip: "href অ্যাট্রিবিউট লিঙ্কের গন্তব্য নির্দেশ করে।"
+    },
+    {
+        category: "HTML",
+        question: "html কোড দিয়েই পেজ এর background color chenge করতে গেলে <body>তে কোন attribute দিতে হয় ?",
+        options: [
+            "background-color",
+            "page-color",
+            "bgcolor",
+            "কোনোটিই নয়"
+        ],
+        correctAnswer: 2,
+        tip: "bgcolor html page এর color দিতে নির্দেশ করে।"
+    },
+    {
+        category: "HTML",
+        question: "'Login' button এর type হলো-",
+        options: [
+            "reset type",
+            "menu type",
+            "submit type",
+            "start type"
+        ],
+        correctAnswer: 2,
+        tip: "যেহেতু লগইন করার পর আমাদের ডাটা আমরা submit করছি সেহেতু login button হলো submit type"
+    },
+    {
+        category: "HTML",
+        question: "প্যারাগ্রাফ নির্দেশ করতে কোন ট্যাগ ব্যবহার করা হয়?",
+        options: [
+            "&lt;para&gt;",
+            "&lt;p&gt;",
+            "&lt;paragraph&gt;",
+            "&lt;pg&gt;"
+        ],
+        correctAnswer: 1,
+        tip: "&lt;p&gt; ট্যাগ একটি প্যারাগ্রাফ নির্দেশ করে।"
+    },
+    {
+        category: "HTML",
+        question: "html এ <img> tag এ ব্যবহৃত alt attribute এর প্রধান কাজ কি ?",
+        options: [
+            "ইমেজের সাইজ সেট করা",
+            "ইমেজ লোড না হলে বিকল্প টেক্সট দেখানো",
+            "ইমেজের ব্যাকগ্রাউন্ড কালার দেওয়া",
+            "ইমেজের ফাইল ফরম্যাট নির্ধারণ করা"
+        ],
+        correctAnswer: 1,
+        tip: "alt অ্যাট্রিবিউট &lt;img&gt;  এলিমেন্ট এ use করা হয় কারণ যদি কোনভাবে ছবি লোড না হয় তার জন্য বিকল্প টেক্সট দেখানো"
+    },
+    {
+        category: "HTML",
+        question: "HTML-এ কোন ট্যাগ ওয়েবপেজের শিরোনাম (title bar)-এ প্রদর্শিত হয়?",
+        options: [
+            "&lt;title&gt;",
+            "&lt;header&gt;",
+            "&lt;heading&gt;",
+            "&lt;h1&gt;"
+        ],
+        correctAnswer: 0,
+        tip: "&lt;title&gt; এলিমেন্ট মূলত কোনো পেজ এর title দিতে ব্যবহার করা হয়"
+    },
+    {
+        category: "HTML",
+        question: "কোন ট্যাগ দ্বারা ওয়েবপেজের মূল কন্টেন্ট লেখা হয়?",
+        options: [
+            "&lt;head&gt;",
+            "&lt;body&gt;",
+            "&lt;html&gt;",
+            "&lt;title&gt;"
+        ],
+        correctAnswer: 1,
+        tip: "&lt;body&gt; tag দ্বারা মূলত webpage এর মূল content লেখা হয় কারণ html এ body বলতে outpute এর পুরো blank পেজটাকে বোঝানো হয় আর যেসমস্ত কাজ করা হয় ওই blank পেজেই করতে হয়"
+    },
+    {
+        category: "HTML",
+        question: "ক্লিকযোগ্য বাটন তৈরি করতে কোন ট্যাগ ব্যবহার করা হয়?",
+        options: [
+            "&lt;button&gt;",
+            "&lt;click&gt;",
+            "&lt;input&gt;",
+            "&lt;action&gt;"
+        ],
+        correctAnswer: 0,
+        tip: "&lt;button&gt; ট্যাগ একটি ক্লিকযোগ্য বাটন নির্দেশ করে।"
+    },
+    {
+        category: "HTML",
+        question: "কোন অ্যাট্রিবিউট ইমেজের সোর্স ঠিকানা সেট করতে ব্যবহৃত হয়?",
+        options: [
+            "src",
+            "href",
+            "rel",
+            "কোনোটিই নয়"
+        ],
+        correctAnswer: 0,
+        tip: "src অ্যাট্রিবিউট image এর source ঠিকানা set করতে ব্যবহার হয় কারণ &lt;img&gt; tag এ src attribute ছাড়া আর কোনো attribute ব্যবহার হয় না image set করতে।"
+    },
+    {
+        category: "HTML",
+        question: "কোন ট্যাগ ওয়েবপেজে টেক্সটকে বোল্ড করে?",
+        options: [
+            "&lt;ul&gt;",
+            "c এবং d দুটোই",
+            "&lt;b&gt;",
+            "&lt;strong&gt;"
+        ],
+        correctAnswer: 1,
+        tip: "&lt;b&gt; এবং &lt;strong&gt এলিমেন্ট দুটোই বোল্ড করে, তবে &lt;strong&gt সেমান্টিক অর্থ দেয়)।"
+    },
+    
+    // CSS প্রশ্ন (২৫টি)
+    {
+        category: "CSS",
+        question: "CSS এর পূর্ণরূপ কী?",
+        options: [
+            "Cascading Style Sheets",
+            "Colorful Style Sheets",
+            "Computer Style Sheets",
+            "Creative Style Sheets"
+        ],
+        correctAnswer: 0,
+        tip: "CSS এর পুরো কথা Cascading style sheets"
+    },
+    {
+        category: "CSS",
+        question: "এলিমেন্টের টেক্সট রঙ পরিবর্তনের জন্য কোন প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "text-color",
+            "font-color",
+            "text-style",
+            "color"
+        ],
+        correctAnswer: 3,
+        tip: "color প্রপার্টি টেক্সটের রঙ সেট করে।"
+    },
+    {
+        category: "CSS",
+        question: "টেক্সট সাইজ নিয়ন্ত্রণের জন্য কোন CSS প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "font-style",
+            "text-size",
+            "font-size",
+            "text-style"
+        ],
+        correctAnswer: 2,
+        tip: "font-size প্রপার্টি টেক্সটের সাইজ সেট করে।"
+    },
+    {
+        category: "CSS",
+        question: "CSS এ 'demo' আইডি সহ একটি এলিমেন্ট সিলেক্ট করতে কীভাবে লিখবেন?",
+        options: [
+            ".demo",
+            "#demo",
+            "*demo",
+            "demo,&lt;your element&gt;"
+        ],
+        correctAnswer: 1,
+        tip: "# সিলেক্টর নির্দিষ্ট আইডি সহ এলিমেন্ট সিলেক্ট করতে ব্যবহৃত হয়।"
+    },
+    {
+        category: "CSS",
+        question: "ব্যাকগ্রাউন্ড রঙ পরিবর্তনের জন্য কোন প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "bgcolor",
+            "color",
+            "background-color",
+            "bg-color"
+        ],
+        correctAnswer: 2,
+        tip: "background-color প্রপার্টি একটি এলিমেন্টের ব্যাকগ্রাউন্ড রঙ সেট করে।"
+    },
+    {
+        category: "CSS",
+        question: "'test' ক্লাস নাম সহ এলিমেন্ট সিলেক্ট করতে কীভাবে লিখবেন?",
+        options: [
+            "*test",
+            "#test",
+            ".test",
+            "test"
+        ],
+        correctAnswer: 2,
+        tip: ". সিলেক্টর নির্দিষ্ট ক্লাস সহ এলিমেন্ট সিলেক্ট করতে ব্যবহৃত হয়।"
+    },
+    {
+        category: "CSS",
+        question: "এলিমেন্টের ফন্ট পরিবর্তনের জন্য কোন প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "font-family",
+            "font-style",
+            "font-weight",
+            "font"
+        ],
+        correctAnswer: 0,
+        tip: "font-family প্রপার্টি একটি এলিমেন্টের ফন্ট নির্দিষ্ট করে।"
+    },
+    {
+        category: "CSS",
+        question: "টেবিল সেলের মধ্যে স্পেস নিয়ন্ত্রণের জন্য কোন CSS প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "border-spacing",
+            "border-collapse",
+            "cell-spacing",
+            "table-spacing"
+        ],
+        correctAnswer: 0,
+        tip: "border-spacing প্রপার্টি সন্নিহিত সেলের সীমানার মধ্যে দূরত্ব সেট করে।"
+    },
+    {
+        category: "CSS",
+        question: "CSS এ universal selector কোন চিহ্ন দিয়ে ধরা হয়?",
+        options: [
+            "#",
+            "*",
+            "&",
+            "$"
+        ],
+        correctAnswer: 1,
+        tip: "* চিহ্ন দিয়ে মূলত universal selector ধরতে হয়"
+    },
+    {
+        category: "CSS",
+        question: "এলিমেন্টের বর্ডারের বাইরে স্পেস তৈরি করতে কোন প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "margin",
+            "padding",
+            "border",
+            "spacing"
+        ],
+        correctAnswer: 0,
+        tip: "margin  এলিমেন্টের বর্ডারের বাইরে spece তৈরী করতে সাহায্য করে।"
+    },
+    {
+        category: "CSS",
+        question: "css comment syntax হলো-",
+        options: [
+            "/*comments*/",
+            "/*comments/*",
+            "*/comments/*",
+            "*/comments*/"
+        ],
+        correctAnswer: 0,
+        tip: "/*comments*/ এটি হলো css এর কমেন্ট syntax"
+    },
+    {
+        category: "CSS",
+        question: "এলিমেন্টের position মেথড নির্দিষ্ট করতে কোন CSS প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "positioning",
+            "position",
+            "display",
+            "float"
+        ],
+        correctAnswer: 1,
+        tip: "position প্রপার্টি একটি এলিমেন্টের জন্য পজিশনিং মেথড নির্দিষ্ট করে (static, relative, absolute, fixed, বা sticky)।"
+    },
+    {
+        category: "CSS",
+        question: "কোন CSS প্রপার্টি ছাড়া z-index কাজ করে না?",
+        options: [
+            "content",
+            "opacity",
+            "position",
+            "কোনোটিই নয়"
+        ],
+        correctAnswer: 2,
+        tip: "position ছাড়া কখনোই z-index কাজ করে না"
+    },
+    {
+        category: "CSS",
+        question: "CSS দিয়ে কোনো কন্টেন্ট সম্পূর্ণ গোল shape দিতে গেলে border-radius কত দিতে হয় ?",
+        options: [
+            "50%",
+            "100%",
+            "90%",
+            "200%"
+        ],
+        correctAnswer: 0,
+        tip: "css এর কোনো কন্টেন্ট সম্পূর্ণ গোল করতে গেলে radius 50% দিতে হয়।"
+    },
+    {
+        category: "CSS",
+        question: "CSS-এ কোন প্রপার্টি স্ক্রলবার কন্ট্রোল করতে ব্যবহার করা হয়?",
+        options: [
+            "overflow",
+            "scroolbar",
+            "overflow-scrool",
+            "webscrool"
+        ],
+        correctAnswer: 0,
+        tip: "overflow property page এর scroolbar নিয়ন্ত্রণ করে"
+    },
+    {
+        category: "CSS",
+        question: "এলিমেন্টের বর্ডার স্টাইল পরিবর্তনের জন্য কোন প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "border-decoration",
+            "border-style",
+            "border-line",
+            "border-type"
+        ],
+        correctAnswer: 1,
+        tip: "border-style প্রপার্টি একটি এলিমেন্টের বর্ডার স্টাইল সেট করে।"
+    },
+    {
+        category: "CSS",
+        question: "এলিমেন্টের অস্বচ্ছতা/ট্রান্সপারেন্সি সেট করতে কোন প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "transparency",
+            "opacity",
+            "visibility",
+            "filter"
+        ],
+        correctAnswer: 1,
+        tip: "opacity প্রপার্টি একটি এলিমেন্টের জন্য অস্বচ্ছতা লেভেল সেট করে (0.0 - 1.0)।"
+    },
+    {
+        category: "CSS",
+        question: "টেক্সট alignment নিয়ন্ত্রণের জন্য কোন CSS প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "text-align",
+            "text-position",
+            "align-text",
+            "text-justify"
+        ],
+        correctAnswer: 0,
+        tip: "text-align প্রপার্টি একটি এলিমেন্টে টেক্সটের অনুভূমিক অ্যালাইনমেন্ট নির্দিষ্ট করে।"
+    },
+    {
+        category: "CSS",
+        question: "overflow এর কোন value দিলে webpage scrool না হয়ে স্থির থাকবে?",
+        options: [
+            "hiddne",
+            "scrool",
+            "visible",
+            "auto"
+        ],
+        correctAnswer: 0,
+        tip: "hiddne value দিলে পেজ স্থির থাকবে"
+    },
+    {
+        category: "CSS",
+        question: "::before এবং ::after কাজ করার জন্য কোন CSS প্রপার্টি অবশ্যই দিতে হয়?",
+        options: [
+            "content",
+            "z-indec",
+            "position",
+            "visibility"
+        ],
+        correctAnswer: 0,
+        tip: "content ছাড়া css এ ::after,::before কাজ করে না"
+    },
+    {
+        category: "CSS",
+        question: "টেক্সটে শ্যাডো যোগ করতে কোন প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "text-shadow",
+            "shadow",
+            "text-effect",
+            "font-shadow"
+        ],
+        correctAnswer: 0,
+        tip: "text-shadow প্রপার্টি টেক্সটে শ্যাডো যোগ করে।"
+    },
+    {
+        category: "CSS",
+        question: "কার্সার টাইপ পরিবর্তনের জন্য কোন প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "mouse-pointer",
+            "cursor",
+            "pointer",
+            "mouse-cursor"
+        ],
+        correctAnswer: 1,
+        tip: "cursor প্রপার্টি একটি এলিমেন্টের উপর পয়েন্ট করার সময় প্রদর্শিত মাউস কার্সার নির্দিষ্ট করে।"
+    },
+    {
+        category: "CSS",
+        question: "CSS-এ কালার ডিফাইন করার জন্য কোন ফরম্যাটগুলো ব্যবহার করা যায়?",
+        options: [
+            "নিম্নোক্ত সবগুলি",
+            "named color",
+            "HEX Value",
+            "RGB Value"
+        ],
+        correctAnswer: 0,
+        tip: "named color(red),Hex color(#ffffff) এবং rgb(255,0,0) এগুলো সব css color এর জন্য ইউজ হয়"
+    },
+    {
+        category: "CSS",
+        question: "CSS-এ Transparent রঙের জন্য কোন কীওয়ার্ড ব্যবহার করা হয়?",
+        options: [
+            "none",
+            "clear",
+            "transparent",
+            "invisible"
+        ],
+        correctAnswer: 2,
+        tip: "transparent keyword ব্যবহার হয় সবসময়"
+    },
+    {
+        category: "CSS",
+        question: "গোলাকার কর্নার তৈরি করতে কোন CSS প্রপার্টি ব্যবহার করা হয়?",
+        options: [
+            "border-round",
+            "corner-radius",
+            "border-radius",
+            "round-corner"
+        ],
+        correctAnswer: 2,
+        tip: "border-radius প্রপার্টি এলিমেন্টের কর্নারের রেডিয়াস নির্দিষ্ট করে।"
+    }
+];
+
+// DOM Elements
+const registrationForm = document.getElementById('registration-form');
+const examForm = document.getElementById('exam-form');
+const quizContainer = document.getElementById('quiz-container');
+const resultContainer = document.getElementById('result-container');
+const userNameElement = document.getElementById('user-name');
+const fullNameInput = document.getElementById('fullname');
+
+const quizTitle = document.getElementById('quiz-title');
+const questionElement = document.getElementById('question');
+const optionsContainer = document.getElementById('options');
+const progressBar = document.getElementById('progress-bar');
+const progressText = document.getElementById('progress-text');
+const scoreElement = document.getElementById('score');
+const htmlSkipsElement = document.getElementById('html-skips');
+const cssSkipsElement = document.getElementById('css-skips');
+const prevButton = document.getElementById('prev-btn');
+const nextButton = document.getElementById('next-btn');
+const skipButton = document.getElementById('skip-btn');
+const submitButton = document.getElementById('submit-btn');
+const totalQuestionsElement = document.getElementById('total-questions');
+const correctAnswersElement = document.getElementById('correct-answers');
+const wrongAnswersElement = document.getElementById('wrong-answers');
+const finalScoreElement = document.getElementById('final-score');
+const resultStatusElement = document.getElementById('result-status');
+const wrongAnswersList = document.getElementById('wrong-answers-list');
+const showMistakesBtn = document.getElementById('show-mistakes-btn');
+const restartButton = document.getElementById('restart-btn');
+
+// Quiz variables
+let currentQuestionIndex = 0;
+let score = 0;
+let userAnswers = new Array(questions.length).fill(null);
+let userName = '';
+let htmlSkipsUsed = 0;
+let cssSkipsUsed = 0;
+const maxHtmlSkips = 3;
+const maxCssSkips = 3;
+const passingScore = 45; // 45 out of 51 to pass
+
+// Form submission
+examForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  userName = fullNameInput.value.trim();
+  if (userName) {
+    registrationForm.style.display = 'none';
+    quizContainer.style.display = 'block';
+    initQuiz();
+  }
+});
+
+// Quiz initialization
+function initQuiz() {
+  userNameElement.textContent = userName;
+  showQuestion();
+  updateProgress();
+  updateScore();
+  updateSkipCounters();
+}
+
+// Show question
+function showQuestion() {
+  const question = questions[currentQuestionIndex];
+  questionElement.textContent = question.question;
+  
+  optionsContainer.innerHTML = '';
+  question.options.forEach((option, index) => {
+    const optionElement = document.createElement('div');
+    optionElement.classList.add('option');
+    if (userAnswers[currentQuestionIndex] === index) {
+      optionElement.classList.add('selected');
+    }
+    
+    optionElement.innerHTML = option;
+    optionElement.addEventListener('click', () => selectOption(index));
+    optionsContainer.appendChild(optionElement);
+  });
+  
+  // Update navigation buttons
+  prevButton.disabled = currentQuestionIndex === 0;
+  if (currentQuestionIndex === questions.length - 1) {
+    nextButton.style.display = 'none';
+    submitButton.style.display = 'block';
+  } else {
+    nextButton.style.display = 'block';
+    submitButton.style.display = 'none';
+  }
+  
+  // Update skip button state
+  updateSkipButton();
+}
+
+// Select option
+function selectOption(optionIndex) {
+  userAnswers[currentQuestionIndex] = optionIndex;
+  showQuestion();
+  updateScore();
+}
+
+// Skip question
+function skipQuestion() {
+  const currentQuestion = questions[currentQuestionIndex];
+  if (currentQuestion.category === "HTML" && htmlSkipsUsed < maxHtmlSkips) {
+    htmlSkipsUsed++;
+  } else if (currentQuestion.category === "CSS" && cssSkipsUsed < maxCssSkips) {
+    cssSkipsUsed++;
+  } else {
+    return; // No skips left for this category
+  }
+  
+  userAnswers[currentQuestionIndex] = -1; // Mark as skipped
+  updateSkipCounters();
+  
+  // Move to next question if available
+  if (currentQuestionIndex < questions.length - 1) {
+    currentQuestionIndex++;
+    showQuestion();
+    updateProgress();
+  } else {
+    showQuestion(); // Update UI for last question
+  }
+}
+
+// Update skip button state
+function updateSkipButton() {
+  const currentQuestion = questions[currentQuestionIndex];
+  const canSkipHTML = currentQuestion.category === "HTML" && htmlSkipsUsed < maxHtmlSkips;
+  const canSkipCSS = currentQuestion.category === "CSS" && cssSkipsUsed < maxCssSkips;
+  
+  skipButton.disabled = !(canSkipHTML || canSkipCSS);
+}
+
+// Update skip counters
+function updateSkipCounters() {
+  htmlSkipsElement.textContent = `${htmlSkipsUsed}/${maxHtmlSkips}`;
+  cssSkipsElement.textContent = `${cssSkipsUsed}/${maxCssSkips}`;
+}
+
+// Update progress
+function updateProgress() {
+  const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+  progressBar.style.width = `${progress}%`;
+  progressText.textContent = `question ${currentQuestionIndex + 1}/${questions.length}`;
+}
+
+// Update score
+function updateScore() {
+  score = userAnswers.reduce((total, answer, index) => {
+    return answer === questions[index].correctAnswer ? total + 1 : total;
+  }, 0);
+  
+}
+
+// Next question
+function nextQuestion() {
+  if (currentQuestionIndex < questions.length - 1) {
+    currentQuestionIndex++;
+    showQuestion();
+    updateProgress();
+  }
+}
+
+// Previous question
+function prevQuestion() {
+  if (currentQuestionIndex > 0) {
+    currentQuestionIndex--;
+    showQuestion();
+    updateProgress();
+  }
+}
+
+// Show result
+function showResult() {
+  quizContainer.style.display = 'none';
+  resultContainer.style.display = 'block';
+  
+  const correctAnswers = userAnswers.reduce((total, answer, index) => {
+    return answer === questions[index].correctAnswer ? total + 1 : total;
+  }, 0);
+  
+  const wrongAnswers = questions.length - correctAnswers - (htmlSkipsUsed + cssSkipsUsed);
+  const finalScore = Math.round((correctAnswers / questions.length) * 100);
+  const rawScore = correctAnswers;
+  
+  totalQuestionsElement.textContent = questions.length;
+  correctAnswersElement.textContent = correctAnswers;
+  wrongAnswersElement.textContent = wrongAnswers;
+  finalScoreElement.textContent = finalScore;
+  
+  // Set result status
+  resultStatusElement.textContent = rawScore >= passingScore ? "You are Passed!" : "You are Fail!";
+  resultStatusElement.className = rawScore >= passingScore ? "result-status pass" : "result-status fail";
+}
+
+// Show mistakes
+function showMistakes() {
+  wrongAnswersList.innerHTML = '<h3>All Questions You Answered Wrong:</h3>';
+  
+  userAnswers.forEach((answer, index) => {
+    if (answer !== questions[index].correctAnswer && answer !== null && answer !== -1) {
+      const question = questions[index];
+      const wrongAnswerItem = document.createElement('div');
+      wrongAnswerItem.className = 'wrong-answer-item';
+      
+      wrongAnswerItem.innerHTML = `
+                <p class="question-text"><strong>Question:</strong> ${question.question}</p>
+                <p class="your-answer"><strong>Your Answer:</strong> ${question.options[answer]}</p>
+                <p class="correct-answer"><strong>Correct Answer:</strong> ${question.options[question.correctAnswer]}</p>
+                <p class="explanation"><strong>Explain:</strong> ${question.tip}</p>
+            `;
+      
+      wrongAnswersList.appendChild(wrongAnswerItem);
+    }
+  });
+  
+  wrongAnswersList.style.display = 'block';
+}
+
+// Restart quiz
+function restartQuiz() {
+  currentQuestionIndex = 0;
+  userAnswers = new Array(questions.length).fill(null);
+  score = 0;
+  htmlSkipsUsed = 0;
+  cssSkipsUsed = 0;
+  
+  resultContainer.style.display = 'none';
+  registrationForm.style.display = 'block';
+  fullNameInput.value = '';
+  wrongAnswersList.style.display = 'none';
+}
+
+// Event listeners
+nextButton.addEventListener('click', nextQuestion);
+prevButton.addEventListener('click', prevQuestion);
+skipButton.addEventListener('click', skipQuestion);
+submitButton.addEventListener('click', showResult);
+showMistakesBtn.addEventListener('click', showMistakes);
+restartButton.addEventListener('click', restartQuiz);
+    </script>
+</body>
+</html>
